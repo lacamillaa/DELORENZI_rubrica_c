@@ -82,6 +82,15 @@ int main(void) {
                 break;
             case 2:
                 // stampa la lista di contatti
+                printf("tutti i contatti\n");
+                if (!nContatti) {
+                    separate(SEPLEN);
+                    printf("la rubrica e' vuota\n");
+                }
+                for (int i = 0; i < nContatti; i++) {
+                    separate(SEPLEN);
+                    printContact(rubrica, i);
+                }
                 break;
             case 3:
                 // cerca
