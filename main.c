@@ -33,12 +33,21 @@ int main(void) {
                 char nome[31] = "";
                 char cognome[31] = "";
                 char tel[21] = "";
-                printf("Inserisci nome: ");
-                nameIn(nome);
-                printf("Inserisci cognome: ");
-                nameIn(cognome);
-                printf("Inserisci telefono: ");
-                telIn(tel);
+                int nl = 0;
+                int cl = 0;
+                int tl = 0;
+                do {
+                    printf("Inserisci nome: ");
+                    nl = nameIn(nome);
+                } while (nl == 0);
+                do {
+                    printf("Inserisci cognome: ");
+                    cl = nameIn(cognome);
+                } while (cl == 0);
+                do {
+                    printf("Inserisci n. telefono: ");
+                    tl = telIn(tel);
+                } while (tl == 0);
                 separate(SEPLEN);
                 printf("nome: ");
                 strOut(nome);
