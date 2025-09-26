@@ -112,6 +112,17 @@ int main(void) {
                 do {
                     printf("Inserisci cognome: ");
                 } while (!nameIn(cognome));
+                pos = findContact(rubrica, cognome);
+                if (pos != -1) {
+                    for (int i = pos; i < nContatti; i++) {
+                        rubrica[i] = rubrica[i + 1];
+                    }
+                    nContatti--;
+                }
+                else {
+                    strOut(cognome);
+                    printf(" non esiste\n");
+                }
                 break;
             case 0:
                 printf("Chiusura del programma in corso...\n");
