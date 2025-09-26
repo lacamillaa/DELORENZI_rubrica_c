@@ -1,37 +1,87 @@
 #include <stdbool.h>
+#include <stdio.h>
 
 int getCharType(char c) {
     if (c == 0) {
         return -1;
     }
-    else if (c == ' ') {
+    if (c == '\n') {
+        return 0;
+    }
+    if (c == ' ') {
         // spazio = 1
         return 1;
     }
-    else if (c >= 'A' && c <= 'Z') {
+    if (c >= 'A' && c <= 'Z') {
         // lettera maiuscola = 2
         return 2;
     }
-    else if (c >= 'a' && c <= 'z') {
+    if (c >= 'a' && c <= 'z') {
         // lettera minuscola = 3
         return 3;
     }
-    else if (c >= '0' && c <= '9') {
+    if (c >= '0' && c <= '9') {
         // carattere numerico = 4
         return 4;
     }
-    else if (c == '+') {
+    if (c == '+') {
         return 5;
     }
-    else return 0;
+    return 0;
 }
 
-void clean(char s[], bool name) {
-    int j = 0;
-    for (int i = 0; s[i] != 0; i++) {
-        int type = getCharType(s[j]);
-        if (!type || (type > 4 && name)) j++;
-        s[i] = s[j];
-        j++;
+int nameIn(char* s) {
+    fflush(stdin);
+    char c = getchar();
+    int i = 0;
+    while (getCharType(c) && i < 30) {
+        if (!getCharType(c)) {
+            // new line
+            s[i] = 0;
+            break;
+        }
+        if (getCharType(c) <= 3) {
+            s[i] = c;
+            i++;
+        }
+        c = getchar();
+    }
+    return i;
+}
+
+int telIn(char* s) {
+    char c = 0;
+    int i = 0;
+    bool usedPre = false;
+    while (getCharType(c) && i < 20) {
+        c = (char)getchar();
+        switch (getCharType(c)) {
+            case 0:
+                s[i] = 0;
+                break;
+            case 1: case 4:
+                // spazio o numero
+                s[i] = c;
+                i++;
+                break;
+            case 5:
+                // + del prefisso
+                if (i == 0) {
+                    s[0] = c;
+                    i++;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return i;
+}
+
+void strOut(char* s) {
+    int i = 0;
+    while (s[i] != 0) {
+        printf("%c",s[i]);
+        i++;
     }
 }

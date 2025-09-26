@@ -5,4 +5,8 @@
 
 int getCharType(char c);
 
-void clean(char s[], bool name);
+int nameIn(char* s);
+
+int telIn(char* s);
+
+void strOut(char* s);

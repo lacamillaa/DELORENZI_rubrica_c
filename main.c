@@ -1,20 +1,19 @@
 #include <stdio.h>
 #include "strprocess.h"
 
+#define SEPLEN 40
+
 struct Contatto {
     char nome[31];
     char cognome[31];
     char tel[21];
 };
 
-void nameIn(char* s) {
-    scanf("%30s",s);
-    clean(s,true);
-}
-
-void telIn(char* s) {
-    scanf("%20s",s);
-    clean(s,false);
+void separate(int len) {
+    for (int i = 0; i < len; i++) {
+        printf("-");
+    }
+    printf("\n");
 }
 
 int main(void) {
@@ -31,6 +30,26 @@ int main(void) {
         switch (scelta) {
             case 1:
                 // aggiungi contatto
+                char nome[31] = "";
+                char cognome[31] = "";
+                char tel[21] = "";
+                printf("Inserisci nome: ");
+                nameIn(nome);
+                printf("Inserisci cognome: ");
+                nameIn(cognome);
+                printf("Inserisci telefono: ");
+                telIn(tel);
+                separate(SEPLEN);
+                printf("nome: ");
+                strOut(nome);
+                printf("\n");
+                printf("cognome: ");
+                strOut(cognome);
+                printf("\n");
+                printf("num. telefono: ");
+                strOut(tel);
+                printf("\n");
+                separate(SEPLEN);
                 break;
             case 2:
                 // stampa la lista di contatti
