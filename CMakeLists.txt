@@ -3,4 +3,4 @@ project(DELORENZI_rubrica_c C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(DELORENZI_rubrica_c main.c)
+add_executable(DELORENZI_rubrica_c main.c strprocess.c)

@@ -1,10 +1,21 @@
 #include <stdio.h>
+#include "strprocess.h"
 
 struct Contatto {
     char nome[31];
     char cognome[31];
     char tel[21];
 };
+
+void nameIn(char* s) {
+    scanf("%30s",s);
+    clean(s,true);
+}
+
+void telIn(char* s) {
+    scanf("%20s",s);
+    clean(s,false);
+}
 
 int main(void) {
     int scelta = 0;
