@@ -11,7 +11,7 @@ struct Contatto {
     char tel[21];
 };
 
-int findContact(struct Contatto r[100], char *s) {
+int findContact(struct Contatto r[100], const char *s) {
     int i = 0;
     while (i < 100) {
         if (!strcmp(s, r[i].cognome)) return i;
@@ -56,28 +56,33 @@ int main(void) {
         char tel[21] = "";
         switch (scelta) {
             case 1:
-                // aggiungi contatto
-                do {
-                    printf("Inserisci nome: ");
-                } while (!nameIn(nome));
-                do {
-                    printf("Inserisci cognome: ");
-                } while (!nameIn(cognome));
-                do {
-                    printf("Inserisci n. telefono: ");
-                } while (!telIn(tel));
                 int pos = findContact(rubrica, cognome);
-                if (pos == -1) {
-                    struct Contatto c;
-                    strcpy(c.nome, nome);
-                    strcpy(c.cognome, cognome);
-                    strcpy(c.tel, tel);
-                    rubrica[nContatti] = c;
-                    printContact(rubrica,nContatti);
-                    nContatti++;
-                } else {
-                    strOut(cognome);
-                    printf(" esiste gia'\n");
+                if (nContatti == 100) {
+                    printf("Memoria esaurita\n");
+                }
+                else {
+                    // aggiungi contatto
+                    do {
+                        printf("Inserisci nome: ");
+                    } while (!nameIn(nome));
+                    do {
+                        printf("Inserisci cognome: ");
+                    } while (!nameIn(cognome));
+                    do {
+                        printf("Inserisci n. telefono: ");
+                    } while (!telIn(tel));
+                    if (pos == -1) {
+                        struct Contatto c;
+                        strcpy(c.nome, nome);
+                        strcpy(c.cognome, cognome);
+                        strcpy(c.tel, tel);
+                        rubrica[nContatti] = c;
+                        printContact(rubrica,nContatti);
+                        nContatti++;
+                    } else {
+                        strOut(cognome);
+                        printf(" esiste gia'\n");
+                    }
                 }
                 break;
             case 2:
