@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+
 #include "strprocess.h"
 
 #define SEPLEN 40
@@ -8,6 +10,25 @@ struct Contatto {
     char cognome[31];
     char tel[21];
 };
+
+int findContact(struct Contatto r[100], char *s) {
+    int i = 0;
+    while (i < 100) {
+        if (!strcmp(s, r[i].cognome)) return i;
+        i++;
+    }
+    return -1;
+}
+
+void printContact(struct Contatto r[100], int i) {
+    struct Contatto c = r[i];
+    printf("Nome: ");
+    strOut(c.nome);
+    printf("\nCognome: ");
+    strOut(c.cognome);
+    printf("\nTelefono: ");
+    strOut(c.tel);
+}
 
 void separate(int len) {
     for (int i = 0; i < len; i++) {
@@ -19,6 +40,7 @@ void separate(int len) {
 int main(void) {
     int scelta = 0;
     struct Contatto rubrica[100];
+    int nContatti = 0;
     do {
         printf("1 - aggiungi un nuovo contatto\n");
         printf("2 - visualizza tutti i contatti\n");
@@ -42,6 +64,7 @@ int main(void) {
                 do {
                     printf("Inserisci n. telefono: ");
                 } while (!telIn(tel));
+
                 separate(SEPLEN);
                 printf("nome: ");
                 strOut(nome);
@@ -62,6 +85,15 @@ int main(void) {
                 do {
                     printf("Inserisci cognome da cercare: ");
                 } while (!nameIn(cognome));
+                int pos = findContact(rubrica, cognome);
+                if (pos != -1) {
+                    printf("Trovato 1 contatto: \n");
+                    printContact(rubrica, pos);
+                }
+                else {
+                    strOut(cognome);
+                    printf("non trovato");
+                }
                 break;
             case 4:
                 // elimina
