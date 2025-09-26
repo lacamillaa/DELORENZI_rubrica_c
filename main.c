@@ -27,27 +27,21 @@ int main(void) {
         printf("0 - esci\n");
         printf("Inserisci comando: ");
         scanf("%d", &scelta);
+        char nome[31] = "";
+        char cognome[31] = "";
+        char tel[21] = "";
         switch (scelta) {
             case 1:
                 // aggiungi contatto
-                char nome[31] = "";
-                char cognome[31] = "";
-                char tel[21] = "";
-                int nl = 0;
-                int cl = 0;
-                int tl = 0;
                 do {
                     printf("Inserisci nome: ");
-                    nl = nameIn(nome);
-                } while (nl == 0);
+                } while (!nameIn(nome));
                 do {
                     printf("Inserisci cognome: ");
-                    cl = nameIn(cognome);
-                } while (cl == 0);
+                } while (!nameIn(cognome));
                 do {
                     printf("Inserisci n. telefono: ");
-                    tl = telIn(tel);
-                } while (tl == 0);
+                } while (!telIn(tel));
                 separate(SEPLEN);
                 printf("nome: ");
                 strOut(nome);
@@ -65,9 +59,15 @@ int main(void) {
                 break;
             case 3:
                 // cerca
+                do {
+                    printf("Inserisci cognome da cercare: ");
+                } while (!nameIn(cognome));
                 break;
             case 4:
                 // elimina
+                do {
+                    printf("Inserisci cognome: ");
+                } while (!nameIn(cognome));
                 break;
             case 0:
                 printf("Chiusura del programma in corso...\n");
