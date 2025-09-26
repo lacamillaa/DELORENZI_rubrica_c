@@ -28,6 +28,7 @@ void printContact(struct Contatto r[100], int i) {
     strOut(c.cognome);
     printf("\nTelefono: ");
     strOut(c.tel);
+    printf("\n");
 }
 
 void separate(int len) {
@@ -41,8 +42,9 @@ int main(void) {
     int scelta = 0;
     struct Contatto rubrica[100];
     int nContatti = 0;
+    printf("RUBRICA by Camilla");
     do {
-        printf("1 - aggiungi un nuovo contatto\n");
+        printf("\n1 - aggiungi un nuovo contatto\n");
         printf("2 - visualizza tutti i contatti\n");
         printf("3 - cerca per cognome\n");
         printf("4 - elimina contatto per cognome\n");
@@ -64,18 +66,19 @@ int main(void) {
                 do {
                     printf("Inserisci n. telefono: ");
                 } while (!telIn(tel));
-
-                separate(SEPLEN);
-                printf("nome: ");
-                strOut(nome);
-                printf("\n");
-                printf("cognome: ");
-                strOut(cognome);
-                printf("\n");
-                printf("num. telefono: ");
-                strOut(tel);
-                printf("\n");
-                separate(SEPLEN);
+                int pos = findContact(rubrica, cognome);
+                if (pos == -1) {
+                    struct Contatto c;
+                    strcpy(c.nome, nome);
+                    strcpy(c.cognome, cognome);
+                    strcpy(c.tel, tel);
+                    rubrica[nContatti] = c;
+                    printContact(rubrica,nContatti);
+                    nContatti++;
+                } else {
+                    strOut(cognome);
+                    printf(" esiste gia'\n");
+                }
                 break;
             case 2:
                 // stampa la lista di contatti
@@ -85,14 +88,14 @@ int main(void) {
                 do {
                     printf("Inserisci cognome da cercare: ");
                 } while (!nameIn(cognome));
-                int pos = findContact(rubrica, cognome);
+                pos = findContact(rubrica, cognome);
                 if (pos != -1) {
                     printf("Trovato 1 contatto: \n");
                     printContact(rubrica, pos);
                 }
                 else {
                     strOut(cognome);
-                    printf("non trovato");
+                    printf(" non trovato");
                 }
                 break;
             case 4:
