@@ -85,3 +85,26 @@ void strOut(char* s) {
         i++;
     }
 }
+
+int findStr(char** arr, char* str, int s, int e, int l) {
+    int m = (s + e + 1) / 2;
+    if (str[l] == 0) return m;
+    if (arr[m][l] == 0) return -1;
+    if (s == e) {
+        if (arr[m][l] != str[l]) return -1;
+        l++;
+    }
+    else {
+        if (arr[m][l] > str[l]) {
+            // R, C => sx
+            e = m - 1;
+        } else if (arr[m][l] < str[l]) {
+            // C, R
+            s = m + 1;
+        } else {
+            // C, C
+            l++;
+        }
+    }
+    return findStr(arr, str, s, e, l);
+}
