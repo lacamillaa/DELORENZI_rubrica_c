@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "strprocess.h"
@@ -41,6 +42,7 @@ void separate(int len) {
 int main(void) {
     int scelta = 0;
     struct Contatto rubrica[100];
+    char** cognomi = malloc(100 * sizeof(char*));
     int nContatti = 0;
     printf("RUBRICA by Camilla");
     do {
@@ -54,9 +56,9 @@ int main(void) {
         char nome[31] = "";
         char cognome[31] = "";
         char tel[21] = "";
+        int pos = 0;
         switch (scelta) {
             case 1:
-                int pos = findContact(rubrica, cognome);
                 if (nContatti == 100) {
                     printf("Memoria esaurita\n");
                 }
@@ -71,12 +73,14 @@ int main(void) {
                     do {
                         printf("Inserisci n. telefono: ");
                     } while (!telIn(tel));
+                    pos = findContact(rubrica, cognome);
                     if (pos == -1) {
                         struct Contatto c;
                         strcpy(c.nome, nome);
                         strcpy(c.cognome, cognome);
                         strcpy(c.tel, tel);
                         rubrica[nContatti] = c;
+                        cognomi[nContatti] = cognome;
                         printContact(rubrica,nContatti);
                         nContatti++;
                     } else {
@@ -102,7 +106,7 @@ int main(void) {
                 do {
                     printf("Inserisci cognome da cercare: ");
                 } while (!nameIn(cognome));
-                pos = findContact(rubrica, cognome);
+                pos = findStr(cognomi,cognome,0,nContatti - 1,0);
                 if (pos != -1) {
                     printf("Trovato 1 contatto: \n");
                     printContact(rubrica, pos);
