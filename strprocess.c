@@ -101,12 +101,19 @@ int charCmp(char s1, char s2) {
 }
 
 int strCmp(char* s1, char* s2) {
-    int l = 0;
-    int res;
-    do {
-        res = charCmp(s1[l], s2[l]);
-        l++;
-    } while (!res);
+    int res = 0;
+    // se s1 = s2 => 0
+    // se s1 > s2 => 1
+    // se s1 < s2 => -1
+    // Camillp
+    // Camill
+    // s1 > s2 => 1
+    int i = 0;
+    // individua la parte comune
+    for (i = 0; !res && i <= strlen(s1) && i <= strlen(s2); i++) {
+        res = charCmp(s1[i], s2[i]);
+    }
+    res = charCmp(s1[i], s2[i]);
     return res;
 }
 
@@ -133,4 +140,20 @@ int findStr(char arr[][31], char* str, int s, int e, int l) {
         }
     }
     return findStr(arr, str, s, e, l);
+}
+
+int insertPos(char arr[][31], char* str, int s, int e) {
+    // e incluso
+    int m = (s + e) / 2;
+    int r = strCmp(arr[m],str);
+    if (s == e) return m;
+    if (r == -1) {
+        s = m + 1;
+    }
+    else if (r == 0) {
+        return m;
+    }
+    else {
+        e = m;
+    } return insertPos(arr, str, s, e);
 }

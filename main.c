@@ -12,9 +12,9 @@ struct Contatto {
     char tel[21];
 };
 
-int findContact(struct Contatto r[100], const char *s) {
+int findContact(struct Contatto r[100], const char *s, int limit) {
     int i = 0;
-    while (i < 100) {
+    while (i < limit) {
         if (!strcmp(s, r[i].cognome)) return i;
         i++;
     }
@@ -72,18 +72,22 @@ int main(void) {
                 do {
                     printf("Inserisci n. telefono: ");
                 } while (!telIn(tel));
-                pos = findContact(rubrica, cognome);
+                pos = findContact(rubrica,cognome,nContatti);
                 if (pos == -1) {
-                    for (int i = 0; i < nContatti; i++) {
-                        // ricerca della posizione
-                    }
                     struct Contatto c;
                     strcpy(c.nome, nome);
                     strcpy(c.cognome, cognome);
                     strcpy(c.tel, tel);
-                    rubrica[nContatti] = c;
-                    strcpy(cognomi[nContatti],c.cognome);
-                    printContact(rubrica,nContatti);
+                    int p = insertPos(cognomi,cognome,0,nContatti + 1);
+                    for (int i = nContatti; i > p; i--) {
+                        rubrica[i] = rubrica[i - 1];
+                    }
+                    rubrica[p] = c;
+                    for (int i = nContatti; i > p; i--) {
+                        strcpy(cognomi[i], cognomi[i - 1]);
+                    }
+                    strcpy(cognomi[p], cognome);
+                    printContact(rubrica,p);
                     nContatti++;
                 } else {
                     strOut(cognome);
@@ -126,7 +130,7 @@ int main(void) {
             do {
                 printf("Inserisci cognome: ");
             } while (!nameIn(cognome));
-            pos = findContact(rubrica, cognome);
+            pos = findContact(rubrica, cognome, nContatti);
             if (pos != -1) {
                 for (int i = pos; i < nContatti; i++) {
                     rubrica[i] = rubrica[i + 1];
