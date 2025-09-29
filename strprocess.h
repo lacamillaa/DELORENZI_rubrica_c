@@ -11,4 +11,8 @@ int telIn(char* s);
 
 void strOut(char* s);
 
-int findStr(char** arr, char* str, int s, int e, int l);
+int charCmp(char s1, char s2);
+
+int strCmp(char* s1, char* s2);
+
+int findStr(char arr[][31], char* str, int s, int e, int l);

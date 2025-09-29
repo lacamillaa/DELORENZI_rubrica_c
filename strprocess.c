@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 int getCharType(char c) {
     if (c == 0) {
@@ -86,11 +87,36 @@ void strOut(char* s) {
     }
 }
 
-int findStr(char** arr, char* str, int s, int e, int l) {
+int charCmp(char s1, char s2) {
+    if (getCharType(s1) == 2) {
+        s1 += ' ';
+    }
+    if (getCharType(s2) == 2) {
+        s2 += ' ';
+    }
+    const int diff = s1 - s2;
+    if (diff < 0) return -1;
+    if (diff > 0) return 1;
+    return 0;
+}
+
+int strCmp(char* s1, char* s2) {
+    int l = 0;
+    int res;
+    do {
+        res = charCmp(s1[l], s2[l]);
+        l++;
+    } while (!res);
+    return res;
+}
+
+int findStr(char arr[][31], char* str, int s, int e, int l) {
     int m = (s + e + 1) / 2;
+    if (e < s) return -1;
     if (str[l] == 0) return m;
     if (arr[m][l] == 0) return -1;
     if (s == e) {
+        printf("%d - %d\n", arr[m][l], str[l]);
         if (arr[m][l] != str[l]) return -1;
         l++;
     }
