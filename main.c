@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "strprocess.h"
@@ -78,6 +79,13 @@ int main(void) {
                     strcpy(c.cognome, cognome);
                     strcpy(c.tel, tel);
                     int fp = firstPos(cognomi, c.cognome, 0, nContatti);
+                    char* afterStr = malloc(31 * sizeof(char));
+                    strcpy(afterStr, cognome);
+                    int len = strlen(afterStr) - 1;
+                    afterStr[len] += 1;
+                    int lp = firstPos(cognomi, afterStr, fp, nContatti);
+                    free(afterStr);
+                    fp = firstPos(nomi, nome, fp, lp);
                     for (int i = nContatti; i > fp; i--) {
                         rubrica[i] = rubrica[i-1];
                         strcpy(cognomi[i], cognomi[i-1]);
