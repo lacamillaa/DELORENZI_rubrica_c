@@ -28,7 +28,6 @@ void separate(int len) {
 
 void printContact(struct Contatto r[100], int i) {
     separate(SEPLEN);
-    printf("\n");
     struct Contatto c = r[i];
     printf("Nome: ");
     strOut(c.nome);
@@ -50,7 +49,7 @@ int main(void) {
         printf("\n1 - aggiungi un nuovo contatto\n");
         printf("2 - visualizza tutti i contatti\n");
         printf("3 - cerca per cognome\n");
-        printf("4 - elimina contatto per cognome\n");
+        printf("4 - elimina contatto\n");
         printf("0 - esci\n");
         printf("Inserisci comando: ");
         scanf("%d", &scelta);
@@ -93,9 +92,9 @@ int main(void) {
                     separate(SEPLEN);
                     nContatti++;
                 } else {
-                    strOut(cognome);
-                    printf(" ");
                     strOut(nome);
+                    printf(" ");
+                    strOut(cognome);
                     printf(" esiste gia'\n");
                 }
             }
@@ -127,20 +126,28 @@ int main(void) {
                 printf(" non trovato");
             }
         } else if (scelta == 4) {
-            // elimina
-            do {
-                printf("Inserisci cognome: ");
-            } while (!nameIn(cognome));
-            int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
-            if (pos != -1) {
-                for (int i = pos; i < nContatti; i++) {
-                    rubrica[i] = rubrica[i + 1];
+            if (!nContatti) {
+                printf("la rubrica e' vuota, operazione non consentita\n");
+            } else {
+                do {
+                    printf("Inserisci nome: ");
+                } while (!nameIn(nome));
+                do {
+                    printf("Inserisci cognome: ");
+                } while (!nameIn(cognome));
+                int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
+                if (pos != -1) {
+                    for (int i = pos; i < nContatti; i++) {
+                        rubrica[i] = rubrica[i + 1];
+                    }
+                    nContatti--;
                 }
-                nContatti--;
-            }
-            else {
-                strOut(cognome);
-                printf(" non esiste\n");
+                else {
+                    strOut(nome);
+                    printf(" ");
+                    strOut(cognome);
+                    printf(" non esiste\n");
+                }
             }
         } else if (scelta == 0) {
             printf("Chiusura del programma in corso...\n");
