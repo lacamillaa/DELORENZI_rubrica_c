@@ -10,3 +10,5 @@ int nameIn(char* s);
 int telIn(char* s);
 
 void strOut(char* s);
+
+int charCmp(char s1, char s2);

@@ -85,3 +85,13 @@ void strOut(char* s) {
         i++;
     }
 }
+
+int charCmp(char s1, char s2) {
+    if (s1 == s2) return 1;
+    if (getCharType(s1) == 2 || getCharType(s2) == 2) {
+        if (s1 + ' ' == s2 || s2 + ' ' == s1) {
+            return 1;
+        }
+    }
+    return 0;
+}
