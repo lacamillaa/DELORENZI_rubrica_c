@@ -41,6 +41,8 @@ void separate(int len) {
 int main(void) {
     int scelta = 0;
     struct Contatto rubrica[100];
+    char cognomi[100][31];
+    char nomi[100][31];
     int nContatti = 0;
     printf("RUBRICA by Camilla");
     do {
@@ -75,8 +77,17 @@ int main(void) {
                     strcpy(c.nome, nome);
                     strcpy(c.cognome, cognome);
                     strcpy(c.tel, tel);
-                    rubrica[nContatti] = c;
-                    printContact(rubrica,nContatti);
+                    int fp = firstPos(cognomi, c.cognome, 0, nContatti);
+                    printf("%d\n",fp);
+                    for (int i = nContatti; i > pos; i--) {
+                        rubrica[i] = rubrica[i-1];
+                        strcpy(cognomi[i], cognomi[i-1]);
+                        strcpy(nomi[i], nomi[i-1]);
+                    }
+                    rubrica[fp] = c;
+                    strcpy(cognomi[fp],c.cognome);
+                    strcpy(nomi[fp],c.nome);
+                    printContact(rubrica,fp);
                     nContatti++;
                 } else {
                     strOut(cognome);
