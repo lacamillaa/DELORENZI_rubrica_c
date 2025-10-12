@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int getCharType(char c) {
     if (c == 0) {
@@ -84,4 +86,57 @@ void strOut(char* s) {
         printf("%c",s[i]);
         i++;
     }
+}
+
+int charCmp(char s1, char s2) {
+    if (getCharType(s1) == 2) {
+        s1 += ' ';
+    }
+    if (getCharType(s2) == 2) {
+        s2 += ' ';
+    }
+    if (s1 < s2) return -1;
+    if (s2 < s1) return 1;
+    return 0;
+}
+
+int firstPos(char list[100][31], char str[31], int s, int e) {
+    // s incluso, e escluso
+    if (s == e) return s;
+    int m = (s + e) / 2;
+    int l = 0;
+    while (charCmp(list[m][l], str[l]) == 0 && list[m][l] != 0 && str[l] != 0) {
+        l++;
+    }
+    // l contiene l'ultima pos in cui le due stringhe corrispondono o 0 se non corrispondono
+    int res = charCmp(list[m][l], str[l]);
+    if (res == -1) {
+        // l'elemento della lista viene prima
+        // sposta in avanti
+        s = m + 1;
+    }
+    else {
+        // l'elemento della lista viene dopo / è uguale
+        e = m;
+    }
+    return firstPos(list, str, s, e);
+}
+
+int findPos(char list[100][31], char str[31], int s, int e) {
+    int pos = firstPos(list, str, s, e);
+    // esamina la stringa
+    for (int i = 0; i < strlen(list[pos]) || i < strlen(str); i++) {
+        if (charCmp(list[pos][i], str[i])) return -1;
+    }
+    return pos;
+}
+
+int lastPos(char list[100][31], char str[31], int e) {
+    char* afterStr = malloc(31 * sizeof(char));
+    strcpy(afterStr, str);
+    int len = strlen(afterStr) - 1;
+    afterStr[len]++;
+    int pos = firstPos(list, afterStr, 0, e);
+    free(afterStr);
+    return pos;
 }
