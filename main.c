@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include "strprocess.h"
@@ -20,7 +19,16 @@ int findContact(char cognomi[100][31], char cognome[31], char nomi[100][31], cha
     return nPos;
 }
 
+void separate(int len) {
+    for (int i = 0; i < len; i++) {
+        printf("-");
+    }
+    printf("\n");
+}
+
 void printContact(struct Contatto r[100], int i) {
+    separate(SEPLEN);
+    printf("\n");
     struct Contatto c = r[i];
     printf("Nome: ");
     strOut(c.nome);
@@ -28,13 +36,6 @@ void printContact(struct Contatto r[100], int i) {
     strOut(c.cognome);
     printf("\nTelefono: ");
     strOut(c.tel);
-    printf("\n");
-}
-
-void separate(int len) {
-    for (int i = 0; i < len; i++) {
-        printf("-");
-    }
     printf("\n");
 }
 
@@ -89,6 +90,7 @@ int main(void) {
                     strcpy(cognomi[fp],c.cognome);
                     strcpy(nomi[fp],c.nome);
                     printContact(rubrica,fp);
+                    separate(SEPLEN);
                     nContatti++;
                 } else {
                     strOut(cognome);
@@ -104,7 +106,6 @@ int main(void) {
                 printf("la rubrica e' vuota\n");
             }
             for (int i = 0; i < nContatti; i++) {
-                separate(SEPLEN);
                 printContact(rubrica, i);
             }
         } else if (scelta == 3) {
@@ -112,10 +113,14 @@ int main(void) {
             do {
                 printf("Inserisci cognome da cercare: ");
             } while (!nameIn(cognome));
-            int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
-            if (pos != -1) {
-                printf("Trovato 1 contatto: \n");
-                printContact(rubrica, pos);
+            int fp = findPos(cognomi, cognome, 0, nContatti);
+            if (fp != -1) {
+                int lp = lastPos(cognomi, cognome, nContatti);
+                int rl = lp - fp;
+                printf("Trovato/i %d contatto/i: \n",rl);
+                for (int i = fp; i < lp; i++) {
+                    printContact(rubrica, i);
+                }
             }
             else {
                 strOut(cognome);
