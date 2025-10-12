@@ -12,13 +12,17 @@ struct Contatto {
     char tel[21];
 };
 
-int findContact(struct Contatto r[100], const char *s, int lim) {
-    int i = 0;
-    while (i < lim) {
-        if (!strcmp(s, r[i].cognome)) return i;
-        i++;
-    }
-    return -1;
+int findContact(char cognomi[100][31], char cognome[31], char nomi[100][31], char nome[31], int lim) {
+    int cPos = findPos(cognomi, cognome, 0, lim);
+    if (cPos == -1) return -1;
+    char* afterStr = malloc(31 * sizeof(char));
+    strcpy(afterStr, cognome);
+    int len = strlen(cognome) - 1;
+    afterStr[len]++;
+    int lcPos = firstPos(cognomi, afterStr, cPos, lim);
+    free(afterStr);
+    int nPos = findPos(nomi, nome, cPos, lcPos);
+    return nPos;
 }
 
 void printContact(struct Contatto r[100], int i) {
@@ -72,7 +76,7 @@ int main(void) {
                 do {
                     printf("Inserisci n. telefono: ");
                 } while (!telIn(tel));
-                int pos = findContact(rubrica, cognome, nContatti);
+                int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
                 if (pos == -1) {
                     struct Contatto c;
                     strcpy(c.nome, nome);
@@ -98,6 +102,8 @@ int main(void) {
                     nContatti++;
                 } else {
                     strOut(cognome);
+                    printf(" ");
+                    strOut(nome);
                     printf(" esiste gia'\n");
                 }
             }
@@ -116,7 +122,7 @@ int main(void) {
             do {
                 printf("Inserisci cognome da cercare: ");
             } while (!nameIn(cognome));
-            int pos = findContact(rubrica, cognome, nContatti);
+            int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
             if (pos != -1) {
                 printf("Trovato 1 contatto: \n");
                 printContact(rubrica, pos);
@@ -130,7 +136,7 @@ int main(void) {
             do {
                 printf("Inserisci cognome: ");
             } while (!nameIn(cognome));
-            int pos = findContact(rubrica, cognome, nContatti);
+            int pos = findContact(cognomi, cognome, nomi, nome, nContatti);
             if (pos != -1) {
                 for (int i = pos; i < nContatti; i++) {
                     rubrica[i] = rubrica[i + 1];
