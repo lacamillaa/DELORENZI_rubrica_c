@@ -15,12 +15,7 @@ struct Contatto {
 int findContact(char cognomi[100][31], char cognome[31], char nomi[100][31], char nome[31], int lim) {
     int cPos = findPos(cognomi, cognome, 0, lim);
     if (cPos == -1) return -1;
-    char* afterStr = malloc(31 * sizeof(char));
-    strcpy(afterStr, cognome);
-    int len = strlen(cognome) - 1;
-    afterStr[len]++;
-    int lcPos = firstPos(cognomi, afterStr, cPos, lim);
-    free(afterStr);
+    int lcPos = lastPos(cognomi, cognome, lim);
     int nPos = findPos(nomi, nome, cPos, lcPos);
     return nPos;
 }
@@ -83,12 +78,7 @@ int main(void) {
                     strcpy(c.cognome, cognome);
                     strcpy(c.tel, tel);
                     int fp = firstPos(cognomi, c.cognome, 0, nContatti);
-                    char* afterStr = malloc(31 * sizeof(char));
-                    strcpy(afterStr, cognome);
-                    int len = strlen(afterStr) - 1;
-                    afterStr[len] += 1;
-                    int lp = firstPos(cognomi, afterStr, fp, nContatti);
-                    free(afterStr);
+                    int lp = lastPos(cognomi, c.cognome, nContatti);
                     fp = firstPos(nomi, nome, fp, lp);
                     for (int i = nContatti; i > fp; i--) {
                         rubrica[i] = rubrica[i-1];

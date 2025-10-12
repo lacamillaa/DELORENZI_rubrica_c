@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int getCharType(char c) {
@@ -127,5 +128,15 @@ int findPos(char list[100][31], char str[31], int s, int e) {
     for (int i = 0; i < strlen(list[pos]) || i < strlen(str); i++) {
         if (charCmp(list[pos][i], str[i])) return -1;
     }
+    return pos;
+}
+
+int lastPos(char list[100][31], char str[31], int e) {
+    char* afterStr = malloc(31 * sizeof(char));
+    strcpy(afterStr, str);
+    int len = strlen(afterStr) - 1;
+    afterStr[len]++;
+    int pos = firstPos(list, afterStr, 0, e);
+    free(afterStr);
     return pos;
 }
