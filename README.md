@@ -7,3 +7,6 @@
 * **visualizzazione** dei contatti
 * **ricerca** per nome o cognome
 * **eliminazione** di un contatto
+## Funzionalità mancanti:
+* debug input comando numerico
+* forzata interruzione dell'input di stringhe una volta raggiunto il limite
